@@ -1,0 +1,44 @@
+{
+  "name": "messanger",
+  "version": "1.0.0",
+  "description": "My messenger",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "client": "npm run start --prefix client",
+    "startDev": "cross-env NODE_ENV=development concurrently \"npm run dev\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrainIsBad/messanger.git"
+  },
+  "keywords": [
+    "react",
+    "webpack",
+    "express",
+    "node",
+    "socket.io",
+    "mongoose"
+  ],
+  "author": "BrainIsBad <oh.fworld@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrainIsBad/messanger/issues"
+  },
+  "homepage": "https://github.com/BrainIsBad/messanger#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.2",
+    "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "shortid": "^2.2.15",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.11",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.6"
+  }
+}
