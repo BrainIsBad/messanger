@@ -19,15 +19,16 @@ export const RegistrationPage = () => {
     const validateForm = () => {
         Object.keys(form).forEach(key => {
             if (form[key].trim() === '') {
-                setErrors()
-                errors[key] = `Enter "${key}"!`
+                setErrors(prev => ({...prev, [key]: `Enter "${key}"!`}))
             }
         })
     }
 
     const registerHandler = evt => {
         evt.preventDefault()
-        
+        validateForm()
+
+        console.log(errors)
     }
 
     return (
@@ -43,16 +44,18 @@ export const RegistrationPage = () => {
                         className="form-control"
                         onChange={inputChangeHandler}
                     />
+                    { errors.email && <small className="text-danger">{errors.email}</small> }
                 </div>
                 <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Username</label>
                     <input
                         type="text"
-                        name="email"
+                        name="username"
                         id="username"
                         className="form-control"
                         onChange={inputChangeHandler}
                     />
+                    { errors.username && <small className="text-danger">{errors.username}</small> }
                 </div>
                 <div className="form-group">
                     <label htmlFor="email">Password</label>
@@ -63,9 +66,10 @@ export const RegistrationPage = () => {
                         className="form-control"
                         onChange={inputChangeHandler}
                     />
+                    { errors.password && <small className="text-danger">{errors.password}</small> }
                 </div>
                 <div className="form-group">
-                    <label htmlFor="email">Password</label>
+                    <label htmlFor="email">Retype password</label>
                     <input
                         type="password"
                         name="retypePassword"
@@ -73,6 +77,7 @@ export const RegistrationPage = () => {
                         className="form-control"
                         onChange={inputChangeHandler}
                     />
+                    { errors.retypePassword && <small className="text-danger">{errors.retypePassword}</small> }
                 </div>
 
                 <div className="d-flex align-items-center justify-content-between">
