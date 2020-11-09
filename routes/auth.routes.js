@@ -8,6 +8,10 @@ const User = require('../models/User')
 
 const router = Router()
 
+router.get('/hello', (req, res) => {
+    res.status(200).json({hello: 'hello'})
+})
+
 router.post('/register', [
     check('email', 'Incorrect email').isEmail(),
     check('username', 'Enter username').trim().isLength({min: 2}),
@@ -17,8 +21,12 @@ router.post('/register', [
         const errors = validationResult(req)
 
         if (!errors.isEmpty()) {
-            res.status(401).json({
-                errors: errors.array(),
+            const errorsView = {}
+            errors.array().forEach(err => {
+                errorsView[err.param] = err.msg
+            })
+            res.status(400).json({
+                errors: errorsView,
                 message: 'Validation failed'
             })
         }

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {NavLink} from "react-router-dom";
+import axios from 'axios'
 
 export const RegistrationPage = () => {
 
@@ -17,18 +18,44 @@ export const RegistrationPage = () => {
     }
 
     const validateForm = () => {
+        const newErrors = {}
         Object.keys(form).forEach(key => {
             if (form[key].trim() === '') {
-                setErrors(prev => ({...prev, [key]: `Enter "${key}"!`}))
+                newErrors[key] = `Enter "${key}"!`
+            }
+            if (form.password !== form.retypePassword) {
+                newErrors.password = 'Password not equals!'
+                newErrors.retypePassword = 'Password not equals!'
             }
         })
+        setErrors(newErrors)
+
+        return Object.keys(newErrors).length === 0
     }
 
-    const registerHandler = evt => {
+    const registerHandler = async evt => {
         evt.preventDefault()
-        validateForm()
+        const validationResult = validateForm()
 
-        console.log(errors)
+        if (validationResult) {
+            try {
+                // const res = await axios.get('/api/auth/hello')
+                // console.log(res)
+                const response = await axios.post('/api/auth/register', {...form}, {
+                    headers: {
+                        'content-type': 'application/json charset=utf-8'
+                    }
+                })
+
+                if (response.errors) {
+                    setErrors(response.errors)
+                }
+
+                console.log(response)
+            } catch (e) {
+                console.log(e.message)
+            }
+        }
     }
 
     return (
